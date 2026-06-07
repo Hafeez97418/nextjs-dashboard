@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import postgres from 'postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
+//INFO: This file is used to seed the database with initial data. It creates the necessary tables and inserts the placeholder data into them. The GET function is used to trigger the seeding process when the endpoint is accessed.
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function seedUsers() {
@@ -103,7 +105,7 @@ async function seedRevenue() {
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
+    await sql.begin((_sql) => [
       seedUsers(),
       seedCustomers(),
       seedInvoices(),
